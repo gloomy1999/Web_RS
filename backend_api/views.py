@@ -10,9 +10,9 @@ def detect_change(request):
         image2 = request.FILES.get('post_image')
         pre_image = open(image1.name, mode='wb')
         post_image = open(image2.name, mode='wb')
-        for chunk in image1.chunks:
+        for chunk in image1.chunks():
             pre_image.write(chunk)
-        for chunk in image2.chunks:
+        for chunk in image2.chunks():
             post_image.write(chunk)
         '''change detection'''
         # 图像送进模型推理，返回单通道灰度图
@@ -27,7 +27,7 @@ def extract_object(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
         object_image = open(image.name, mode='wb')
-        for chunk in image.chunks:
+        for chunk in image.chunks():
             object_image.write(chunk)
         '''object extraction'''
         # 图像送进模型推理，然后对指定对象部分进行语义分割级渲染
@@ -41,7 +41,7 @@ def detect_object(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
         object_image = open(image.name, mode='wb')
-        for chunk in image.chunks:
+        for chunk in image.chunks():
             object_image.write(chunk)
         '''object detection'''
         # 图像送进模型推理，然后返回指定对象的坐标，对该部分进行对应颜色渲染
@@ -55,7 +55,7 @@ def classify_pixel(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
         whole_image = open(image.name, mode='wb')
-        for chunk in image.chunks:
+        for chunk in image.chunks():
             whole_image.write(chunk)
         '''classify the image'''
         # 图像送进模型推理，然后逐像素分类进行渲染
